@@ -120,7 +120,8 @@ Tsconfig.json – файл, который указывает на то, что 
   let c3: Shape = Shape.Square;
   console.log(c3);
 
-  let c4: string = Status[1]; // обращаясь к перечислению через индексатор и указывая целочисленное значение можно получить строковое представление этого значения
+  let c4: string = Status[1]; // Обращаясь к перечислению через индексатор и указывая целочисленное 
+                              //  значение можно получить строковое представление этого значения.
   console.log(c4);
 
 ///////////////////////////////////////////////////////////////////////
@@ -193,14 +194,16 @@ Tsconfig.json – файл, который указывает на то, что 
   function myProcedure() : void {
       alert("hello");
   }
-// тип void можно использовать для определения переменных, но такой переменной можно присвоить только значение undefined или null
+// Тип void можно использовать для определения переменных, но такой переменной можно присвоить 
+//  только значение undefined или null
   let someVoidVal: void = undefined;
 
   let u: undefined = undefined; // переменная типа undefined
   let n: null = null; // переменная типа null
 
 // по умолчанию значения null и undefined могут быть присвоены любому другому типу данных
-// при опции компилятора --strictNullChecks null и undefined могут быть использованы для инициализации типов void или null и undefined соответственно
+// При опции компилятора --strictNullChecks null и undefined могут быть использованы для инициализации 
+//  типов void или null и undefined соответственно.
   let testNumber: number = undefined; 
 
 
@@ -208,5 +211,198 @@ Tsconfig.json – файл, который указывает на то, что 
 // Type assertion - утверждение типов, это операция, которая напоминает приведение типов в других языках программирования.
 // С помощью утверждения типов можно подсказать компилятору, конкретный тип с которым мы сейчас работаем. 
   let someData: any = "Hello world";
-  let strLength1: number = (<string>someData).length; // утверждение, что значение someData является типом string использование синтаксиса "angle-bracket"
-  let strLength2: number = (someData as string).length; // // утверждение, что значение someData является типом string использование синтаксиса "as"
+  let strLength1: number = (<string>someData).length; 
+  // утверждение, что значение someData является типом string использование синтаксиса "angle-bracket"
+  let strLength2: number = (someData as string).length;
+  // утверждение, что значение someData является типом string использование синтаксиса "as"
+
+/*====================================== Функции =========================================*/
+
+// обычная функция
+  function add1(x, y) {
+      return x + y;
+  }
+
+  let result1 = add1(1, 2);
+  console.log(result1);
+
+// типизированная функция. Принимает два аргумента типа number и возвращает значение типа number
+  function add2(x: number, y: number) :number {
+      return x + y;
+  }
+
+  let result2: number = add2(10, 20);
+//let result2: number = add2(10); // ожидается два параметра
+//let result2: number = add2(10, "text"); // второй аргумент должен быть числовым
+//let result2: string = add2(10, 20); // результат работы функции не может быть присвоен строковой переменной
+  console.log(result2);
+
+
+// function type
+// при создании переменной можно указать тип данных определяющий сигнатуру функции.
+// параметры => возвращаемый тип
+  let myAdd: (x: number, y: number) => number; 
+// принимает два параметра типа number возвращает значение number
+  let myProc: () => void; 
+// переменной может быть присвоена функция, которая ничего не принимает и не возвращает значений
+
+  function myAddDeclaration(x: number, y: number) : number {
+      return x + y;
+  }
+
+  myAdd = myAddDeclaration;
+  console.log(myAdd(10, 20)); // вызов функции
+
+  myProc = function() {
+      console.log("Hello world");
+  }
+  myProc(); // вызов функции
+
+
+// optional params
+// В TypeScript все параметры функции являются обязательными.
+// но если после имени параметра указать символ ? параметр становиться опциональным, и если при вызове его не предоставить
+// значение этого параметра будет undefined 
+// Опциональные параметры могут быть только последними параметрами в списке параметров метода.
+
+// optional parameters
+  function getFullName(firstName: string, lastName?: string): string { 
+      if (lastName) {
+          return firstName + " " + lastName;
+      }
+      else {
+          return firstName;
+      }
+  }
+
+  let fullNmae1: string = getFullName("Ivan", "Ivanov");
+  let fullNmae2: string = getFullName("Ivan");
+
+
+// Параметры со значением по умолчанию - параметры метода, для которых в объявлении функции присвоено значение,
+// которое будет использоваться если функция будет вызвана без указания значения для данного параметра или 
+// если в качестве значение будет передано undefined
+
+// default-iniatialize parametes
+  function getDisplayName(firstName: string, lastName: string = "Ivanov") {
+      return "Display Name: " + firstName + " " + lastName;
+  }
+
+  let fullNmae3: string = getDisplayName("Ivan", "Ivanov");
+  let fullNmae4: string = getDisplayName("Ivan");
+  let fullNmae5: string = getDisplayName("Ivan", undefined); // идентичен предыдущему вызову
+
+
+// rest params
+// параметр функции в начале имени которого используется ... является rest параметром.
+// rest параметр - это набор опциональных параметров. При вызове такого метода, количество параметров не ограничивается.
+// тип данной функции - (message:string, ...names: string[]) => void
+  function printValue(message: string, ...names: string[]) : void {
+      console.log(message);
+      for(let i = 0; i < names.length; i++) {
+          console.log(names[i]);
+      }
+  }
+
+// вызов функции с rest параметрами
+  printValue("sample 1");
+  printValue("sample 2", "1", "2");
+  printValue("sample 3", "1", "2", "abc");
+
+
+// context
+// this - контекст функции. This - переменная, которая устанавливается при запуске функции.
+  function test1() {
+      console.log(this);
+  }
+  test1(); // global object
+
+  let someObj = {
+      name: 'test',
+      testMeth: test1
+  };
+  someObj.testMeth(); // someObj
+
+  let someInstance = new test1(); // new instance
+
+// Установка контекста вызываемой функции
+  function test2(x: number, y: number) {
+      console.log(x + y);
+      console.log(this)
+  }
+
+  let someTestObj = {
+      name: "test object"
+  };
+
+  test2.call(someTestObj, 10, 20); // Установка контекста, вариант 1
+  test2.apply(someTestObj, [30, 40]); // установка контекста, вариант 2
+  let newFunc = test2.bind(someTestObj, 50); // установка контекста, вариант 3
+  newFunc(60);
+
+
+// arrow functions
+// arrow function - специальный синтаксис определения функций
+// в переменной increment находиться функция, которая принимает один параметр и возвращает его значение увеличиное на 1.
+
+  let increment = function (x: number) { return x + 1; }
+
+  let incrementArrow1 = (x: number) => { return x + 1; }
+
+  let incrementArrow2 = (x: number) => x + 1;
+
+  let incrementArrow3 = x => x + 1; 
+
+
+// arrow functions context
+  function repeatOperation(count: number, callback: () => void): void {
+      console.log("start");
+      for (let i = 0; i < count; i++) {
+          callback();
+          // контекст данной функции - глобальный объект. Если в функции callback используется контекст он тоже будет ссылаться на глобальный объект.
+      }
+      console.log("stop");
+  }
+
+  let settings = {
+      displayName: "test object",
+
+      test1: function () {
+          repeatOperation(3, (function () {
+              console.log(this.displayName);
+          })); // в данном случае this указывает на объект settings
+      },
+
+      test2: function() {
+          repeatOperation(3, () => console.log(this.displayName)) // arrow function захватывает контекст, в котором была создана)
+      } 
+  };
+
+  settings.test1();
+  settings.test2();
+
+
+// overloads
+  function showMessage(message: string); // первая перегрузка функции, которая принимает один параметр типа string
+  function showMessage(message: number); // вторая перегрузка функции, которая принимает один параметр типа number
+  function showMessage(message: any) { // непосредственно реализация функции, не является перегрузкой
+
+      if (typeof message == "number") {
+          switch (message) {
+              case 1: {
+                  console.log("Hello world");
+              } break;
+              case 2: {
+                  console.log("Привет мир");
+              } break;
+          }
+      }
+
+      else if (typeof message == "string") {
+          console.log(message);
+      }
+  }
+
+  showMessage(1);
+  showMessage("test");
+// showMessage(true); // compile error
