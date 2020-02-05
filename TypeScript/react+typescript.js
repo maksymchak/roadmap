@@ -44,3 +44,34 @@ const App: React.FC
 
 const App: React.ClassicComponent
 //Аналогично для классового компонента.
+
+const [title, setTitle] = useState<string>('');
+//Явное указание, что state строка
+
+const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) = {}
+//Задали тип для event onChange
+
+const keyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) = {}
+//Задали тип для event onKeyPress
+
+const ref = useRef<HTMLInputElement>(null); 
+//Говорим useRef, что мы работаем с HTMLInputElement
+
+console.log(ref.current!.value)
+// ! - так мы указываем typescript, что мы уверенны что все будет ок
+
+export const TodoForm: React.FC<{ onAdd(title: string): void }> = props => {
+//Явно указываем, что наш функциональный компонент получает. 
+//void - функция, которая ничего не возвращает
+
+interface TodoFormProps {
+  onAdd(title: string): void
+}
+//interface - тут описываються все входящие свойства и типы
+//И теперь будет выглядеть так: export const TodoForm: React.FC<TodoFormProps> = props => {
+
+type TodoListProps = {
+  todos: any[];
+};
+export const TodoList: React.FC<TodoListProps> = ({ todos }) => {
+//Аналогично interface - описали входящие типы
