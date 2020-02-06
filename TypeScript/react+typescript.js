@@ -75,3 +75,41 @@ type TodoListProps = {
 };
 export const TodoList: React.FC<TodoListProps> = ({ todos }) => {
 //Аналогично interface - описали входящие типы
+
+export interface ITodo {
+  title: string
+  id: number
+  completed: boolean
+}
+//Так можно експортировать типы в интерфейсы в отдельном файле
+
+setTodos(prev => [newTodo, ...prev])
+//Такая запись изменения более коректная, так как отталкиваеться от предедущего состояния
+//Все потому что state и porops обновляються асинхронно
+
+type TodoListProps = {
+  todos: ITodo[];
+  onToggle(id: number): void
+  onRemove: (id: number) => void
+};
+//Добавили типы для ф-ций
+
+onRemove?: (id: number): void
+// Когда мы ставим ? - делаем параметр не обьязательным
+
+declare var confirm: (question: string) => boolean;
+//Так мы говорим, что такая переменная точно будет.
+
+useEffect(() => {
+  const saved = JSON.parse(localStorage.getItem("todos") || "[]") as ITodo[];
+  setTodos(saved);
+}, []);
+//Мы достаем из localStorage наш список и парсим либо его либо пустой массив.
+//Также мы указываем явный тип as ITodo[]
+
+useEffect(() => {
+}, [todos]);
+//В таком формате useEffect отработает только когда увиди, что изменился todos
+
+npm i @types/react-router-dom                                                                                    /
+//При работе с роутер нужно установить дополнительную зависимусть выше
