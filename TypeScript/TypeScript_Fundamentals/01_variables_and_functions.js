@@ -46,18 +46,15 @@ Tsconfig.json – файл, который указывает на то, что 
 
 
 Типы данных:
-
 // Boolean
   let isDone: boolean = false;
 //isDone = 1; // [ts] - type '1' is not assignable to type 'boolean'
-
 
 //  Number
   let a1_decimal: number = 10;
   let a2_hex: number = 0x000a
   let a3_binary: number = 0b1010
   let a4_octal: number = 0o12;
-
 
 // String
   let firstName: string = "Ivan";
