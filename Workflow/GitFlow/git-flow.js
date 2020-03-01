@@ -1,6 +1,6 @@
 rm -rf new-frontend-2019/
-git clone https://gitlab.com/sedna.software/Cafferata/vuurwerktoppers/1.0/new-frontend-2019.git
-git clone git@gitlab.com:sedna.software/Cafferata/vuurwerktoppers/1.0/new-frontend-2019.git
+//git clone https://gitlab.com/sedna.software/Cafferata/vuurwerktoppers/1.0/new-frontend-2019.git
+//git clone git@gitlab.com:sedna.software/Cafferata/vuurwerktoppers/1.0/new-frontend-2019.git
 ls
 cd new-frontend-2019/
 ls
