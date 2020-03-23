@@ -1,6 +1,7 @@
 TypeScript
 
 1. Установка, начало
+2. Basic types
 
 /******************************************************************************************/
 
@@ -21,3 +22,21 @@ TypeScript - Java Script, который масштабируеться. В ос
 
 Чтобы скомпилировать файл:
 // tsc fileName
+
+/*========================== Basic types =============================*/
+
+Boolean
+// const isFetching: boolean = true;
+// const isLoading: boolean = false;
+
+Number
+// const int: number = 42;
+// const float: number = 4.2;
+// const num: number = 3e10;
+
+String
+// const message: string = 'Hello Typescript'
+
+Array
+Массив из чисел
+// const numberArray: number[] = [1, 1, 2, 3, 5, 8, 13];
