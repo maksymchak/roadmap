@@ -29,14 +29,63 @@ Boolean
 // const isFetching: boolean = true;
 // const isLoading: boolean = false;
 
+
 Number
 // const int: number = 42;
 // const float: number = 4.2;
 // const num: number = 3e10;
 
+
 String
 // const message: string = 'Hello Typescript'
+
 
 Array
 Массив из чисел
 // const numberArray: number[] = [1, 1, 2, 3, 5, 8, 13];
+
+Еще один способ указания типа для массива - так называемый generic types
+//const numberArray2: Array<number> = [1, 1, 2, 3, 5, 8, 13];
+
+Массив из строк
+// const words: string[] = ['Hello', 'Typescript']
+
+Tuple - для разных типов данных в массиве
+const contact: [string, number] = ['Vladilen', 1234567]
+
+
+Any
+// В данном случае можно переопределять тип
+// let variable: any = 42
+// variable = 'New String'
+// variable = []
+
+
+Function
+// Для функций, которые ничего не возвращают - можно указывать явный тип данных
+
+// function sayName(name: string): void {
+//   console.log(name);
+// }
+// sayName("Hello!");
+
+Never - для ф-ций, которые возвращают ошибку или постоянно что-нибудь делают.
+// function throwError(message: string): never {
+//   throw new Error(message);
+// }
+
+// function infinite(): never {
+//   while (true) {}
+// }
+
+
+Type
+// Конструкция для создания своих сообственных типов (Елиосы).
+
+// type Login = string
+// const login: Login = 'admin'
+
+// Или
+// type ID = string | number
+// const id1: ID = 1234
+// const id2: ID = '1234'
