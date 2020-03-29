@@ -63,7 +63,6 @@ Any
 
 Function
 // Для функций, которые ничего не возвращают - можно указывать явный тип данных
-
 // function sayName(name: string): void {
 //   console.log(name);
 // }
@@ -85,7 +84,96 @@ Type
 // type Login = string
 // const login: Login = 'admin'
 
-// Или
+// Или |
 // type ID = string | number
-// const id1: ID = 1234
+// const id1: ID = 
 // const id2: ID = '1234'
+
+// type SomeType = string | null | undefined
+
+/*========================== Interfaces =============================*/
+
+Интерфейс определяет свойства и методы, которые объект должен реализовать. 
+  Другими словами, интерфейс - это определение кастомного типа данных, но без реализации.
+
+  interface Rect {
+      readonly id: string; //readonly - означает, что модификатор только для чтения
+      color?: string; //? - означает, что параметр не обьязательный 
+      size: {
+        width: number
+        height: number
+      }
+  }
+/*
+  const rect1: Rect = {
+    id: '1234',
+    size: {
+      width: 20,
+      height: 30
+    },
+    color: '#ccc'
+  }
+
+  const rect2: Rect = {
+    id: '12345',
+    size: {
+      width: 10,
+      height: 5
+    }
+  }
+
+  rect2.color = 'black'
+*/
+
+const rect3 = {} as Rect
+const rect4 = <Rect>{}
+// =========================
+
+Интерфейс, который наследует интерфейс
+
+interface RectWidthArea extends Rect {
+  getArea: () => number  //number - в данном случае тип, который должен будет быть возвращен
+}
+
+// const rect5: RectWidthArea = {
+//   id: '123',
+//   size: {
+//     width: 20,
+//     height: 20
+//   },
+//   getArea():number {
+//     return this.size.width * this.size.height
+//   }
+// }
+
+// ============
+
+Класс который имплементируеться от интерфейса
+
+interface IClock {
+  time: Date
+  setTime(date: Date): void
+}
+
+class Clock implements IClock {
+  time: Date = new Date()
+  setTime(date: Date): void {
+    this.time = date
+  }
+}
+
+// ============
+
+Для CSS
+
+/*
+interface Styles {
+  [key: string]: string
+}
+
+const css: Styles = {
+  border: '1px solid black',
+  marginTop: '2px',
+  borderRadius: '5px'
+}
+*/
