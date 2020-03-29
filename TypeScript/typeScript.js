@@ -6,6 +6,7 @@ TypeScript
 4. Enum
 5. Functions
 6. Classes
+7. Generics 
 
 /******************************************************************************************/
 
@@ -259,3 +260,149 @@ Enum: перечисления
   console.log('Two params: ', position(a: 10, b: 15)) // Two params: {x: 10, y: 15}
 
 /*========================== Classes =============================*/
+
+// class Car {
+//   readonly numberOfWheels: number = 4
+//   constructor(readonly model: string) {}
+// }
+
+Модификаторы доступа
+В TypeScript три модификатора: public, protected и private.
+Если к свойствам и функциям классов не применяется модификатор, то 
+  такие свойства и функции расцениваются как будто они определены с 
+  модификатором public. 
+
+public
+/*  
+class User {
+       
+      name: string;
+      year: number;
+  }
+
+Будет эквивалентно:
+  class User {
+       
+      public name: string;
+      public year: number;
+  }
+*/
+
+private
+Если же к свойствам и методам применяется модификатор private, 
+  то к ним нельзя будет обратиться извне при создании объекта 
+  данного класса.
+
+Например, создадим класс с приватными свойствами и методами:
+
+/*
+class User {
+    private _name: string;
+    private _year: number;
+ 
+    constructor(name: string, age: number) {
+ 
+        this._name = name;
+        this._year = this.setYear(age);
+    }
+    public displayYear(): void {
+        console.log("Год рождения: " + this._year);
+    }
+ 
+    public displayName(): void {
+        console.log("name: " + this._name);
+    }
+ 
+    private setYear(age: number): number {
+ 
+        return new Date().getFullYear() - age;
+    }
+}
+ 
+let tom = new User("Tom", 24);
+tom.displayName();
+tom.displayYear();
+console.log(tom._name); // нельзя обратиться, так как _name - private
+tom.setYear(45); // нельзя обратиться, так как функция - private
+*/
+
+protected
+Модификатор protected во многом аналогичен private - свойства и методы 
+  с данным модификатором не видны из вне, но к ним можно обратиться из 
+  классов-наследников:
+
+/*
+class User {
+    private name: string;
+    protected age: number;
+    constructor(name: string, age: number) {
+        this.name = name;
+        this.age = age;
+    }
+    public displayInfo(): void {
+ 
+        console.log("name: " + this.name + "; age: " + this.age);
+    }
+}
+class Employee extends User {
+ 
+    private company: string;
+    constructor(name: string, age: number, company: string) {
+        super(name, age);
+        this.company = company;
+    }
+    public showData(): void {
+        console.log("Age: " + this.age);
+        //console.log("Name: " + this.name); // не работает, так как name - private
+    }
+}
+*/
+
+/*========================== Generics =============================*/
+
+Generic - это аргумент для типа. Как у функции есть аргумент, так и 
+  у типа может быть аргумент.
+
+/*
+  const numberArray: Array<number> = [1, 1, 2, 3, 5, 8, 13];
+  const numberArray2: Array<string> = ['dsaf', 'asfd'];
+
+  // <T> - может работать с разными типами данных
+  function reverse<T>(array: T[]): T[] {
+    return array.reverse()
+  }
+
+  reverse(numberArray)
+  reverse(numberArray2)
+*/
+
+Тип который будет состоять из ключей интерфейса Person, используя оператор keyof
+/*
+  interface Person {
+    name: string
+    age: number
+  }
+
+  type PersonKeys = keyof Person
+
+  let key: PersonKeys = 'name'
+  key = 'age'
+  key = 'job' // Будет ошибка
+*/
+
+Создадим новый тип невключая некоторые параметры
+/*
+  type User = {
+    _id: number
+    name: string
+    email: string
+    createdAt: Date
+  }
+
+  type UserKevsNoMeta = Exclude<keyof User, '_id' | 'createdAt'> // 'name' | 'email'
+
+  let u1: UserKeysNoMeta1 = 'name'
+*/
+
+
+
