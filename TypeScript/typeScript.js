@@ -2,6 +2,10 @@ TypeScript
 
 1. Установка, начало
 2. Basic types
+3. Interfaces
+4. Enum
+5. Functions
+6. Classes
 
 /******************************************************************************************/
 
@@ -177,3 +181,81 @@ const css: Styles = {
   borderRadius: '5px'
 }
 */
+
+/*========================== Enum =============================*/
+
+Enum: перечисления
+Тип enum предназначен для описания набора числовых данных с помощью 
+  строковых констант. 
+
+/*  
+  enum Membership {
+    Simple,
+    Standart,
+    Premium
+  }
+
+  const membership = Membership.Standart
+  const membershipReverse = Membership[2]
+
+  console.log(membership) //1
+  console.log(membershipReverse) // Premium
+*/
+
+/*
+  emum SocialMedia {
+    VK = 'VK',
+    FACEBOOK = 'FACEBOOK',
+    INSTAGRAM = 'INSTAGRAM'
+  }
+
+  const social = SocialMedia.INSTAGRAM
+  console.log(social) // INSTAGRAM
+*/
+
+/*========================== Functions =============================*/
+
+Функция, которая в качестве параметров принимает два параметра типа number и
+  возвращает тоже number.
+  // function add(a: number, b: number): number {
+  //   return a + b
+  // }
+
+Функция, которая в качестве параметра принимает параметр типа string и
+  возвращает тоже string.
+  // function toUpperCase(str: string): string {
+  // return str.trim().toUpperCase()
+  // }
+
+// ================
+
+  interface MyPosition {
+    x: number | undefined
+    y: number | undefined
+  }
+
+  interface MyPositionWithDefault extends MyPosition {
+    default: string
+  }
+
+  function position(): MyPosition
+  function position(a: number): MyPositionWithDefault
+  function position(a: number, b: number): MyPosition
+
+  function position(a?: number, b?: number){
+    if (!a && !b) {
+      return {x: undefined, y: undefined}
+    }
+
+    if (a && !b) {
+      return {x: a, y: undefined, default: a.toString}
+    }
+
+    return {x: a, y: b}
+  }
+
+  console.log('Empty: ', position()) // Empty: {x: undefined, y: undefined}
+  console.log('One param: ', position(a: 42)) // One param: {x: 42, y: undefined, default: '42'}
+  console.log('Two params: ', position(a: 10, b: 15)) // Two params: {x: 10, y: 15}
+
+/*========================== Classes =============================*/
