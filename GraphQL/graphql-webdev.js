@@ -131,3 +131,61 @@ query($id: String) {
   {
     "id": 3
   }
+
+
+/*=========================== Different Type & Type Relations ========================================*/
+
+Описуем новый тип даннных:
+
+//Колекция
+const directors = [
+  { id: '1', name: 'Quentin Tarantino', age: 55 },
+  { id: '2', name: 'Michael Radford', age: 72 },
+  { id: '3', name: 'James McTeigue', age: 51 },
+  { id: '4', name: 'Guy Ritchie', age: 50 },
+];
+
+//Тип
+const DirectorType = new GraphQLObjectType({
+  name: 'Director',
+  fields: () => ({
+    id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    age: { type: GraphQLInt },
+  }),
+});
+
+
+Связь колекций:
+
+const movies = [
+  { id: '1', name: 'Pulp Fiction', genre: 'Crime', directorId: '1', },
+  { id: '2', name: '1984', genre: 'Sci-Fi', directorId: '2', },
+  { id: '3', name: 'V for vendetta', genre: 'Sci-Fi-Triller', directorId: '3', },
+  { id: '4', name: 'Snatch', genre: 'Crime-Comedy', directorId: '4', },
+];
+
+const directors = [
+  { id: "1", name: "Quentin Tarantino", age: 55 },
+  { id: "2", name: "Michael Radford", age: 72 },
+  { id: "3", name: "James McTeigue", age: 51 },
+  { id: "4", name: "Guy Ritchie", age: 50 },
+];
+
+//Мы берем массив режисеров и пробегаемся по его елементам ища нужный id, который мы получаем
+// из радительского запроса. Так мы устанавливаем связь между двумя колекцыями.
+
+const MovieType = new GraphQLObjectType({
+  name: 'Movie',
+  fields: () => ({
+    id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    genre: { type: GraphQLString },
+    director: {
+      type: DirectorType,
+      resolve(parent, args) {
+        return directors.find(director => director.id === parent.id);
+      }
+    }
+  }),
+});
