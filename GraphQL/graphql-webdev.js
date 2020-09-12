@@ -1,6 +1,9 @@
 GraphQL
 - Introduction
 - GraphQL Schema & Root Query
+- The Resolve Function & Testing Query
+- Different Type & Type Relations
+- GraphQL Lists
 
 /******************************************************************************************/
 
@@ -189,3 +192,56 @@ const MovieType = new GraphQLObjectType({
     }
   }),
 });
+
+
+/*=========================== GraphQL Lists ========================================*/
+
+const movies = [
+  { id: "1", name: "Pulp Fiction", genre: "Crime", directorId: "1" },
+  { id: "2", name: "1984", genre: "Sci-Fi", directorId: "2" },
+  { id: "3", name: "V for vendetta", genre: "Sci-Fi-Triller", directorId: "3" },
+  { id: "4", name: "Snatch", genre: "Crime-Comedy", directorId: "4" },
+  { id: "5", name: "Reservoir Dogs", genre: "Crime", directorId: "1" },
+  { id: "6", name: "The Hateful Eight", genre: "Crime", directorId: "1" },
+  { id: "7", name: "Inglourious Basterds", genre: "Crime", directorId: "1" },
+  {
+    id: "7",
+    name: "Lock, Stock and Two Smoking Barrels",
+    genre: "Crime-Comedy",
+    directorId: "4",
+  },
+];
+
+const directors = [
+  { id: "1", name: "Quentin Tarantino", age: 55 },
+  { id: "2", name: "Michael Radford", age: 72 },
+  { id: "3", name: "James McTeigue", age: 51 },
+  { id: "4", name: "Guy Ritchie", age: 50 },
+];
+
+// Для выведения списка елемнтов мы используем GraphQLList.
+// При помощи метода filter отсеиваем все фильмы в зависимости от автора возвращаем
+//  найденнный список елемента.
+const DirectorType = new GraphQLObjectType({
+  name: "Director",
+  fields: () => ({
+    id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    age: { type: GraphQLInt },
+    movies: {
+      type: new GraphQLList(MovieType),
+      resolve(parent, args) {
+        return movies.filter((movie) => movie.directorId === parent.id);
+      },
+    },
+  }),
+});
+
+/*=========================== Migration to mLab ========================================*/
+
+В GraphQL, есть три основных понятия:
+  1. запросы (queries) — получение данных с сервера
+  2. мутации (mutations) — изменение данных на сервере и получение обновленных данных обратно
+  3. подписки (subscriptions) — поддержание соединения с сервером в режиме реального времени
+
+// https://cloud.mongodb.com/v2/5f2dcb643fbf3678b9012369#clusters
