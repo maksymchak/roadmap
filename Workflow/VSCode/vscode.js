@@ -1,3 +1,5 @@
+// https://www.youtube.com/watch?v=QeUp3CahkQw&feature=youtu.be&t=1630&ab_channel=%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BB%D0%B5%D0%BD%D0%9C%D0%B8%D0%BD%D0%B8%D0%BD
+
 Prettier
 - Установка
 
@@ -9,3 +11,19 @@ Prettier
 Prettier - инструмент, который автоматически форматирует  JavaScript код и при этом гарантирует,
  что код соотвествует заданной максимальной длине строки.
 
+Editor: Word Wrap - перенос строки
+
+Files: Exclude - скрываем то что не хотим видить
+
+/*================================== hotkeys =======================================================*/
+
+Горячие клавиши Visual Studio Code
+// https://nikomedvedev.ru/other/vscodeshortcuts/hotkeys.html
+
+Ctrl + B  - Показать / скрыть левую панель
+
+Ctrl + Tab  - Перемещение по вкладкам в истории
+
+Ctrl + W  - Закрыть файл
+
+Ctrl + P  - Быстрый переход к файлу
