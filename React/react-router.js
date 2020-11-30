@@ -63,8 +63,9 @@ import { Link } from 'react-router-dom';
   <Route path="/people"
          render={() => <h2>People</h2>}
          exact >
+         /
   <Route path="/people" component={PeoplePage} >
-  <Route path="/planets" component={PlanetsPage} >
+    <Route path="/planets" component={PlanetsPage} >
   <Route path="/starships" component={StarshipsPage} >
 
 Route
