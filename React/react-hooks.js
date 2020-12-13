@@ -1,6 +1,8 @@
 React Hooks
 - useState
 - useEffect
+- useReducer
+- useContext
 
 /******************************************************************************************/
 
@@ -94,3 +96,81 @@ useEffect(() => {
     document.removeEventListener('click', handleClick)
   }
 }, [todos])
+
+
+/*================================ useReducer ==============================================*/
+
+
+Хук useReducer обычно предпочтительнее useState, когда у вас сложная логика состояния, 
+  которая включает в себя несколько значений, или когда следующее состояние зависит от 
+  предыдущего. useReducer также позволяет оптимизировать производительность компонентов, 
+  которые запускают глубокие обновления,
+
+const initialState = {count: 0};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return {count: state.count + 1};
+    case 'decrement':
+      return {count: state.count - 1};
+    default:
+      throw new Error();
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return (
+    <>
+      Count: {state.count}
+      <button onClick={() => dispatch({type: 'decrement'})}>-</button>
+      <button onClick={() => dispatch({type: 'increment'})}>+</button>
+    </>
+  );
+}
+
+//*================================ useContext ==============================================*/
+
+Принимает объект контекста (значение, возвращённое из React.createContext) и возвращает текущее 
+  значение контекста для этого контекста. Текущее значение контекста определяется пропом value 
+  ближайшего <MyContext.Provider> над вызывающим компонентом в дереве.
+
+ const themes = {
+  light: {
+    foreground: "#000000",
+    background: "#eeeeee"
+  },
+  dark: {
+    foreground: "#ffffff",
+    background: "#222222"
+  }
+};
+
+const ThemeContext = React.createContext(themes.light);
+
+function App() {
+  return (
+    <ThemeContext.Provider value={themes.dark}>
+      <Toolbar />
+    </ThemeContext.Provider>
+  );
+}
+/
+function Toolbar(props) {
+  return (
+    <div>
+      <ThemedButton />
+    </div>
+  );
+}
+/
+function ThemedButton() {
+  const theme = useContext(ThemeContext);
+  return (
+    <button style={{ background: theme.background, color: theme.foreground }}>
+      Я стилизован темой из контекста!
+    </button>
+  );
+} 
+/
