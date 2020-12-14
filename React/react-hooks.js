@@ -38,6 +38,40 @@ const Example = () => {
 // Мы вызываем его, чтобы наделить наш функциональный компонент внутренним состоянием. 
 // React будет хранить это состояние между рендерами.
 
+
+  const [count, setCount] = useState(initialCount);
+
+// Аргумент initialState — это состояние, используемое во время начального рендеринга.
+// В последующих рендерах это не учитывается.
+
+Если начальное состояние является результатом дорогостоящих вычислений, вы можете вместо 
+  этого предоставить функцию, которая будет выполняться только при начальном рендеринге:
+
+  const [counter, setCounter] = useState(() => {
+    return calckSize()
+  })
+
+
+useState в формате обьекта:
+
+  const [state, setState] = useState( {
+    title: 'Hello',
+    date: 4
+  })
+
+  function updateTitle() {
+    setState(prev => {
+      return {
+        ...prev,
+        title: 'New title'
+      }
+    })
+  }
+
+  <button onClick={updateTitle}>Change<button>
+
+
+
 /*================================ useEffect ==============================================*/
 
 // useEffect - выполняет ту же роль, что и componentDidMount, componentDidUpdate и componentWillUnmount
