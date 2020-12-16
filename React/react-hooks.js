@@ -3,6 +3,7 @@ React Hooks
 - useEffect
 - useReducer
 - useContext
+- useRef
 
 /******************************************************************************************/
 
@@ -118,18 +119,39 @@ const Example2 = () => {
 
 Пример с сохранением в localStorage
 
-useEffect(() => {
-  const raw = localStorage.getItem('todos') || []
-  setTodos(JSON.parse(raw))
-}, [])
+  useEffect(() => {
+    const raw = localStorage.getItem('todos') || []
+    setTodos(JSON.parse(raw))
+  }, [])
 
-useEffect(() => {
-  document.addEventListener('click', handleClick)
-  localStorage.setItem('todos', JSON.stringify(todos))
-  return () => {
-    document.removeEventListener('click', handleClick)
+  useEffect(() => {
+    document.addEventListener('click', handleClick)
+    localStorage.setItem('todos', JSON.stringify(todos))
+    return () => {
+      document.removeEventListener('click', handleClick)
+    }
+  }, [todos])
+
+
+useEffect componentDidMount
+
+  useEffect(() => {
+    console.log('componentDidMount')
+  }, [])
+
+
+Очистка листнеров:
+
+  const mouseMoveHandler = event => {
+    console.log('move');
   }
-}, [todos])
+
+  useEffect(() => {
+    window.addEventListener('mousemove', mouseMoveHandler)
+
+    return () => window.removeEventListener('mousemove', mouseMoveHandler)
+  }, [])
+
 
 
 /*================================ useReducer ==============================================*/
@@ -208,3 +230,37 @@ function ThemedButton() {
   );
 } 
 /
+
+/*================================ useRef ==============================================*/
+
+Если мы не хотим что-то перерисовывать - мы используем useRef.
+
+useRef возвращает изменяемый ref-объект, свойство .current которого инициализируется переданным 
+  аргументом (initialValue). Возвращённый объект будет сохраняться в течение всего времени 
+  жизни компонента.
+
+  const refContainer = useRef(initialValue);
+
+  useEffect(() => {
+    refContainer.current++
+  })
+
+  <div>Render counts: {refContainer.current}<div>
+
+
+Если вы передадите React объект рефа с помощью подобного выражения <div ref={myRef}/>, React 
+  установит собственное свойство .current на соответствующий DOM-узел при каждом его изменении.
+
+  const inputRef = useRef(null)
+
+  <input ref={inputRef} >
+
+  //*********//////
+
+  const inputRef = useRef(null)
+
+  const focus = () => inputRef.current.focus()
+
+  <input ref={inputRef} >
+
+  <button onClick={focus}> Focus <button>
