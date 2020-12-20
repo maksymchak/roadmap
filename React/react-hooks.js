@@ -4,9 +4,14 @@ React Hooks
 - useReducer
 - useContext
 - useRef
+- useMemo
+- useCallback
+- Создание пользовательских хуков
+
 
 /******************************************************************************************/
-
+// https://github.com/vladilenm/react-hooks-course/tree/master/src/examples
+// https://www.youtube.com/watch?t=1403&v=9KJxaFHotqI&feature=youtu.be&ab_channel=%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BB%D0%B5%D0%BD%D0%9C%D0%B8%D0%BD%D0%B8%D0%BD
 
 /*================================ useState ==============================================*/
 
@@ -264,3 +269,114 @@ useRef возвращает изменяемый ref-объект, свойст�
   <input ref={inputRef} >
 
   <button onClick={focus}> Focus <button>
+
+
+/*================================ useMemo ==============================================*/
+
+// Возвращает мемоизированное значение.
+
+
+// Передайте «создающую» функцию и массив зависимостей. useMemo будет повторно вычислять мемоизированное 
+//   значение только тогда, когда значение какой-либо из зависимостей изменилось. Эта оптимизация помогает 
+//   избежать дорогостоящих вычислений при каждом рендере.
+
+  import React, {useState, useMemo, useEffect} from 'react'
+
+  function complexCompute(num) {
+    console.log('complexCompute')
+    let i = 0
+    while (i < 1000000000) i++
+    return num * 2
+  }
+
+  function App() {
+    const [number, setNumber] = useState(42)
+    const [colored, setColored] = useState(false)
+
+    const styles = useMemo(() => ({
+      color: colored ? 'darkred' : 'black'
+    }), [colored])
+
+    const computed = useMemo(() => {
+      return complexCompute(number)
+    }, [number])
+
+    useEffect(() => {
+      console.log('Styles changed')
+    }, [styles])
+
+    return (
+      <>
+        <h1 style={styles}>Вычисляемое свойство: {computed}<h1>
+        <button className={'btn btn-success'} onClick={() => setNumber(prev => prev + 1)}>Добавить<button>
+        <button className={'btn btn-danger'} onClick={() => setNumber(prev => prev - 1)}>Убрать<button>
+        <button className={'btn btn-warning'} onClick={() => setColored(prev => !prev)}>Изменить<button>
+      <>
+    )
+  }
+
+  export default App
+
+// Вы можете использовать useMemo как оптимизацию производительности, а не как семантическую гарантию. 
+
+
+
+/*================================ useCallback ==============================================*/
+
+// Передайте встроенный колбэк и массив зависимостей. Хук useCallback вернёт мемоизированную версию колбэка, 
+//   который изменяется только, если изменяются значения одной из зависимостей. Это полезно при передаче колбэков 
+//   оптимизированным дочерним компонентам, которые полагаются на равенство ссылок для предотвращения ненужных рендеров
+
+  import React, {useState, useCallback} from 'react'
+  import ItemsList from './ItemsList'
+
+  function App() {
+    const [colored, setColored] = useState(false)
+    const [count, setCount] = useState(1)
+
+    const styles = {
+      color: colored ? 'darkred' : 'black'
+    }
+
+    const generateItemsFromAPI = useCallback((indexNumber) => {
+      return new Array(count).fill('').map((_, i) => `Элемент ${i + indexNumber}`)
+    }, [count])
+
+    return (
+      <>
+        <h1 style={styles}>Количество элементов: {count}<h1>
+        <button className={'btn btn-success'} onClick={() => setCount(prev => prev + 1)}>Добавить<button>
+        <button className={'btn btn-warning'} onClick={() => setColored(prev => !prev)}>Изменить<button>
+
+        <ItemsList getItems={generateItemsFromAPI} >
+      <>
+    )
+  }
+
+  export default App
+
+
+
+/*================================ Создание пользовательских хуков ==============================================*/
+
+function useInput(initialValue) {
+  const [value, setValue] = useState(initialValue)
+
+  const onChange = event => {
+    setValue(event.target.value)
+  }
+
+  return {
+    value, onChange
+  }
+}
+
+function App() {
+  const input = useInput('')
+
+  useLogger(input.value)
+
+  return (
+    <input type='text' value={input.value} onChange={input.onChange}>
+  )
+}
