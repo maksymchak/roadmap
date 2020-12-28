@@ -1,5 +1,6 @@
 React 
 - Начало работы
+- PropTypes
 
 
 
@@ -37,3 +38,67 @@ JSX - расширение языка JavaScript.
     	This is list
     <li>
  */
+
+
+/*================================ PropTypes ==============================================*/
+
+По мере роста вашего приложения вы можете отловить много ошибок с помощью проверки типов. 
+
+PropTypes предоставляет ряд валидаторов, которые могут использоваться для проверки, что получаемые данные корректны. 
+
+/*	function TodoItem({ todo, index, onChange }) {
+	  if (todo.completed) {
+	    classes.push('done')
+	  }
+
+	  return (
+	  	<>Hello<>
+	  )
+	}
+
+	TodoItem.propTypes = {
+	  todo: PropTypes.object.isRequired,
+	  index: PropTypes.number,
+	  onChange: PropTypes.func.isRequired
+	}
+*/
+
+Пример использования возможных валидаторов:
+
+import PropTypes from 'prop-types';
+
+MyComponent.propTypes = {
+  // Можно объявить проп на соответствие определённому JS-типу.
+  // По умолчанию это не обязательно.
+  optionalArray: PropTypes.array,
+  optionalBool: PropTypes.bool,
+  optionalFunc: PropTypes.func,
+  optionalNumber: PropTypes.number,
+  optionalObject: PropTypes.object,
+  optionalString: PropTypes.string,
+  optionalSymbol: PropTypes.symbol,
+};
+
+
+/*================================ FORMS ==============================================*/
+
+
+function AddTodo({ onCreate }) {
+  const input = useInputValue('')
+
+  function submitHandler(event) {
+    event.preventDefault()
+
+    if (input.value().trim()) {
+      onCreate(input.value())
+      input.clear()
+    }
+  }
+
+  return (
+    <form style={{ marginBottom: '1rem' }} onSubmit={submitHandler}>
+      <input {...input.bind} >
+      <button type='submit'>Add todo<button>
+    <form>
+  )
+}
