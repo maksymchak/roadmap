@@ -171,6 +171,10 @@ Math.round - Округляет до ближайшего целого
 	alert( Math.ceil(3.1) );   // 4
 	alert( Math.round(3.1) );  // 3
 
+Функция для рандомного значения:
+function rand(min, max) {
+	return Math.floor(Math.random() * (max-min + 1) + min)
+}
 
 /*================================= BigInt ===================================================*/
 
