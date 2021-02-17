@@ -36,6 +36,8 @@ const person = new Object({
 	}
 })
 
+Cвойство prototype
+
 Object.prototype.sayHello = function() {
 	console.log('Hello!');
 }
