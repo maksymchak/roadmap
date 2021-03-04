@@ -7,27 +7,27 @@
 
 /*================================= Что такое LocalStorage? ===================================================*/
 
-LocalStorage - локальное хранилище или база данных в браузере, в котором можно хранить данные, которые будут доступны после перезагрузки
+localStorage - локальное хранилище или база данных в браузере, в котором можно хранить данные, которые будут доступны после перезагрузки
 	страницы.
 
-LocalStorage - глобальный обьект в window. LocalStorage умеет работать только со строками. Работает он только с текущим доменом.
+localStorage - глобальный обьект в window. localStorage умеет работать только со строками. Работает он только с текущим доменом.
 
 Методы LocalStorage:
-* LocalStorage.setItem(key, value) - записать
-* LocalStorage.getItem(key, value) - получить
-* LocalStorage.removeItem(key) - удалить ключ
-* LocalStorage.clear() - очистить весь LocalStorage
+* localStorage.setItem(key, value) - записать
+* localStorage.getItem(key, value) - получить
+* localStorage.removeItem(key) - удалить ключ
+* localStorage.clear() - очистить весь localStorage
 
 
 // Example1
 	const myNumber = 42;
 
-	LocalStorage.setItem('number', myNumber.toString())
-	console.log(LocalStorage.getItem('number'))
+	localStorage.setItem('number', myNumber.toString())
+	console.log(localStorage.getItem('number'))
 	// 42
 
-	LocalStorage.removeItem(key) 
-	console.log(LocalStorage.getItem('number'))
+	localStorage.removeItem(key) 
+	console.log(localStorage.getItem('number'))
 	// null
 
 
@@ -39,9 +39,9 @@ LocalStorage - глобальный обьект в window. LocalStorage уме�
 		age: 20
 	}
 
-	LocalStorage.setItem('person', JSON.stringify(object) )
+	localStorage.setItem('person', JSON.stringify(object) )
 
-	const raw = LocalStorage.getItem(person);
+	const raw = localStorage.getItem(person);
 	const person = JSON.parse(raw);
 	person.name = 'Anton'
 
@@ -53,10 +53,10 @@ LocalStorage - глобальный обьект в window. LocalStorage уме�
 		console.log(event)
 	})
 
-	LocalStorage.setItem('temp', Date.now().toString())
+	localStorage.setItem('temp', Date.now().toString())
 	// Но сработает только в новой вкладке
 
 
-Чем отличаеться LocalStorage от Cookie
-* LocalStorage на много больше по обьему
+Чем отличаеться localStorage от Cookie
+* localStorage на много больше по обьему
 * Cookie улитают с запросами на сервер (не безопасно)
