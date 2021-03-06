@@ -179,6 +179,18 @@
 	  }
 	}
 
+	const Modal = ({ isVisible, close, children }) => {
+	  return (
+	    isVisible && (
+	      <Backdrop onClick={close}>
+	        <Wrapper onClick={e => e.stopPropagation()}>{children}<Wrapper>
+	      <Backdrop>
+	    )
+	  );
+	};
+
+	// https://www.smashingmagazine.com/2020/06/higher-order-components-react/ 
+
 // 25. Что делает shouldComponentUpdate и почему он важен?
 	Этап жизненного цикла, который решает, будет ли ре-рендер, или нет
 	Позволяет оптимизировать приложение
@@ -274,6 +286,8 @@
 // 42. Что не так с этим кодом?
 	С этим кодом все хорошо. Изменяем state на основе прошлого состояния и входящих
 	параметров
+
+	setIsOpen(prevState => !prevState);
 
 // 43. Какой второй опциональный параметр можно передать в метод setState и за что он отвечает?
 	Функция, уведомляющая, что компонент закончил процесс ре-рендеринга.
