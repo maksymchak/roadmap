@@ -91,3 +91,9 @@ Promise может находится в одном из таких состоя
 
 
 Promise - обретка над асинхроностью
+
+Что раньше Promise или setTimeout ?
+	Promise.resolve будет планировать микрозадачу, а setTimeout - макрозадачу. И микрозадачи будут 
+	выполняться до запуска следующей макрозадачи.
+
+// https://medium.com/@olgakozlova/%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B0-%D0%BD%D0%B0-%D0%B0%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C-promises-%D0%B8-%D1%82%D0%B0%D0%B9%D0%BC%D0%B5%D1%80%D1%8B-2a3b537c901d
