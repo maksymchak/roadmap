@@ -1,206 +1,58 @@
-7. Class
-	- Что такое ES6 class?
+21. OOP
+	- Что такое OOP?
+	- Что такое SOLID?
+	- Что такое Микросервисы?
+    - Что такое SDLC?
 
-    
 /******************************************************************************************/
-// https://www.youtube.com/watch?v=uLY9GXGMXaA&ab_channel=%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BB%D0%B5%D0%BD%D0%9C%D0%B8%D0%BD%D0%B8%D0%BD
 
-/*================================= Что такое ES6 class? ===================================================*/
+// https://medium.com/webbdev/solid-4ffc018077da
+// https://www.youtube.com/watch?v=A6wEkG4B38E&ab_channel=webDev
 
-Cинтаксис классов позволяет более удобно создавать обьекты.
+/*================================= Что такое OOP? ===================================================*/
 
-Есть прототип обьекта и прототип Класса
+Объектно-ориентированное программирование (ООП) – это методология, которая позволяет представить 
+  приложение, в виде совокупности объектов , взаимодействующих друг с другом.
 
-Для инициализации изначальных значений обьектов класса - нужно использовать ф-цию конструктор.
+При использовании ООП, следует придерживаться следующих принципов:
+	• инкапсуляция (encapsulation) – каждый объект отвечает за конкретную функциональность;
+	• наследование (inheritance) – объекты могут наследовать функциональность других объектов;
+	• полиморфизм (polymorphism) – объекты могут предоставлять одинаковый интерфейс и его использование, 
+	                               но внутренняя реализация этого интерфейса будет разной.
+ 
+/*================================= Что такое SOLID? ===================================================*/
 
-// Example1
-	class Animal {
-
-		constructor(options) {
-			this.name = options.name
-			this.age = option.age
-			this.hasTail = options.hasTail
-		}
-
-		voice() {
-			console.log('I am Animal!')
-		}
-		// voice будет находиться в прототипе обьекта
-
-	}
-
-	// Создаем обьект animal при помощи класса
-	const animal = new Animal({
-		name: 'Animal',
-		age: 5,
-		hasTail: true
-	})
-
-	animal.voice()
-	// I am Animal (ф-ция вызываеться в прототипе)
+Вот как расшифровывается акроним SOLID:
+	S: Single Responsibility Principle (Принцип единственной ответственности).
+	O: Open-Closed Principle (Принцип открытости-закрытости).
+	L: Liskov Substitution Principle (Принцип подстановки Барбары Лисков).
+	I: Interface Segregation Principle (Принцип разделения интерфейса).
+	D: Dependency Inversion Principle (Принцип инверсии зависимостей).
 
 
-static - так в классах можно прописать статические методы или переменные. Такие переменные и
-	методы доступны только в его классе.
+// Принцип единственной ответственности
+Класс должен быть ответственен лишь за что-то одно. Если класс отвечает за решение нескольких задач, его подсистемы, 
+	реализующие решение этих задач, оказываются связанными друг с другом. Изменения в одной такой подсистеме ведут 
+	к изменениям в другой.
 
-// Example2
-	class Animal {
+// Принцип открытости-закрытости
+Программные сущности (классы, модули, функции) должны быть открыты для расширения, но не для модификации.
 
-		static type = 'Animal'
-
-		constructor(options) {
-			this.name = options.name
-			this.age = option.age
-			this.hasTail = options.hasTail
-		}
-
-		voice() {
-			console.log('I am Animal!')
-		}
-		// voice будет находиться в прототипе обьекта
-
-	}
-
-	const animal = new Animal({
-		name: 'Animal',
-		age: 5,
-		hasTail: true
-	})
-
-	Animal.type
-	// 'Animal'
+// Принцип подстановки Барбары Лисков
+Цель этого принципа заключаются в том, чтобы классы-наследники могли бы использоваться вместо родительских классов, 
+	от которых они образованы, не нарушая работу программы.
 
 
-При помощи классов мы можем устраивать полноценное наследование
-extends - наследование от класса
+// Принцип разделения интерфейса
+Этот принцип направлен на устранение недостатков, связанных с реализацией больших интерфейсов.
 
 
-// Example3
-	class Cat extends Animal {
-		static type = 'CAT'
-
-		// Когда мы создаем метод конструктор в дочернем классе - нам обьязательно нужно вызвать родитель класс через метод super
-		constructor(options) {
-			super(options)
-			this.color = options.color
-		}
-
-
-		voice() {
-			super.voice()
-			// так будут вызваны два метода - дочерний и родительский
-			console.log('I am Cat!')
-		}
-		// так мы переписываем родительский метод
-	}
-
-	const cat = new Cat({
-		name: 'Cat',
-		age: 7,
-		hasTail: true
-	})
-
-	cat.voice()
-	// I am Animal
-	// I am Cat
-
-
-// Example4
-	class Cat extends Animal {
-		static type = 'CAT'
-
-		constructor(options) {
-			super(options)
-			this.color = options.color
-		}
-
-
-		voice() {
-			super.voice()
-			console.log('I am Cat!')
-		}
-
-		// Геттер - это поле
-		get ageInfo() {
-			return this.age * 7
-		}
-
-		// Cеттер - меняем поле в самом обьекте
-		set ageInfo(newAge) {
-			return this.age = newAge
-		}
-	}
-
-	const cat = new Cat({
-		name: 'Cat',
-		age: 7,
-		hasTail: true
-	})
-
-	cat.ageInfo = 8
-	// 56
-
-
-/*================================= Practise ===================================================*/
-
-$ - приватное поле, обычно нода
-
-// Example5
-	class Component {
-		constructor(selector) {
-			this.$el = document.querySelector(selector)
-		}
-
-		hide() {
-			this.$el.style.display = 'none'
-		}
-
-		show() {
-			this.$el.style.display = 'block'
-		}
-	}
-
-	class Box extends Component {
-		constructor(options) {
-			super(options.selector)
-
-			this.$el.style.width = this.$el.style.height = options.size +'px'
-			this.$el.style.background = options.color
-		}
-	}
-
-	const box1 = new Box({
-		selector: '#box1',
-		size: 100,
-		color: 'red'
-	})
-
-	const box2 = new Box({
-		selector: '#box2',
-		size: 120,
-		color: 'blue'
-	})
-
-	class Circle extends Box {
-		constructor(options) {
-			super(options)
-
-			this.$el.style.borderRadius = '50%'
-		}
-	}
-
-	const c = new Circle({
-		selector: '#circle',
-		size: 90,
-		color: 'green'
-	})
-
-
-Классы - удобный синтаксис для создавания обектов
-
-
-
-
+// Принцип инверсии зависимостей
+Объектом зависимости должна быть абстракция, а не что-то конкретное.
+	* Модули верхних уровней не должны зависеть от модулей нижних уровней. 
+		Оба типа модулей должны зависеть от абстракций.
+	* Абстракции не должны зависеть от деталей. Детали должны зависеть от 
+		абстракций.
 
 
 /*================================= Что такое Экстремальное программирование? ===================================================*/

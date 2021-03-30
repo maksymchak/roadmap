@@ -23,8 +23,6 @@ function useInput(initialValue) {
 function App() {
   const input = useInput('')
 
-  useLogger(input.value)
-
   return (
     <input type='text' value={input.value} onChange={input.onChange}>
   )
